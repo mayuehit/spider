@@ -107,7 +107,7 @@ if __name__ == '__main__':
     print('>>>> start program!')
 
     # 页数
-    max_search_page = 100
+    max_search_page = 10
     
     # 关键字
     search_keyword = '补邮'
@@ -134,8 +134,11 @@ if __name__ == '__main__':
     df.to_csv(v_webo_file,index=False,encoding='utf_8_sig')
 
     # data filter
-    # df = pd.read_csv(v_webo_file)
-    # df.
+    df = pd.read_csv(v_webo_file)
+    df_filter = df[df['PostNum']>=100]
+    
+    # save
+    df_filter.to_csv(v_webo_file,index=False,encoding='utf_8_sig')
 
     endtime = datetime.datetime.now()
     print('>>>> program finish! cost {} seconds'.format((endtime - starttime).seconds))

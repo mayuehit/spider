@@ -15,3 +15,8 @@ re pattern.sub() 替换
 Flag re.S 不使用re.S时，则只在每一行内进行匹配
 
 pandas和jsonpath 两个好用的数据处理工具
+
+DataFrame:
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.filter.html
+过滤掉一些数据:
+https://blog.csdn.net/weixin_45914452/article/details/120585861
