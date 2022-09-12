@@ -2,8 +2,9 @@
 
 ## Need to Repair
 
-if query keyword like famous scene，it will reveal some thing that we wan't see in program
-when I search 雷峰塔,some thing error happened and program stop because of this error
+Q: if query keyword like famous scene，it will reveal some thing that we wan't see in program
+when I search 雷峰塔,some thing error happened and program stop because of this error when get first page.
+A: the reason I found is when get fitst page,bid query not enough,because of the hot word is in first page,but bid not get
 
 ## What I Study
 

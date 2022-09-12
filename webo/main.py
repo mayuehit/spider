@@ -16,7 +16,7 @@ formatter = logging.Formatter(fmt)
 console_handler.setFormatter(formatter)
 logger = logging.getLogger('main')
 # change level here if you want to see more
-logger.setLevel("DEBUG")
+logger.setLevel("INFO")
 logger.addHandler(console_handler)
 
 def trans_time(v_str):
@@ -64,7 +64,8 @@ def get_weibo_list(v_keyword, v_max_page):
         # data re compile
         dr = re.compile(r'<[^>]+>', re.S)
 
-        logger.debug('pre_text_list:', pre_text_list)
+        logger.debug('pre_text_list:')
+        logger.debug(pre_text_list)
 
         if not pre_text_list:
             continue
@@ -72,6 +73,9 @@ def get_weibo_list(v_keyword, v_max_page):
             for pre_text in pre_text_list:
                 post_text = dr.sub('', pre_text)
                 post_text_list.append(post_text)
+                
+        logger.debug('post_text_list:')
+        logger.debug(post_text_list)
         # date
         time_list = jsonpath(cards, '$..mblog.created_at')
         time_list = [trans_time(v_str=i) for i in time_list]
@@ -83,7 +87,7 @@ def get_weibo_list(v_keyword, v_max_page):
         id_list = jsonpath(cards, '$..mblog.id')
 
         # bid
-        bid_list = jsonpath(cards, '$..mblog.bid')
+        # bid_list = jsonpath(cards, '$..mblog.bid')
 
         # reposts
         reposts_count_list = jsonpath(cards, '$..mblog.reposts_count')
@@ -99,7 +103,7 @@ def get_weibo_list(v_keyword, v_max_page):
                 f"time_list_length:{len(time_list)}\n"+
                     f"author_list_length:{len(author_list)}\n"+
                         f"id_list_length:{len(id_list)}\n"+
-                            f"bid_list_length:{len(bid_list)}\n"+
+                            # f"bid_list_length:{len(bid_list)}\n"+
                                 f"reposts_count_list_length:{len(reposts_count_list)}\n"+
                                     f"comments_count_list_length:{len(comments_count_list)}\n"+
                                         f"attitudes_count_list_length:{len(attitudes_count_list)}")
@@ -108,7 +112,7 @@ def get_weibo_list(v_keyword, v_max_page):
             {
                 '页码': [page] * len(id_list),
                 '微博id': id_list,
-                '微博bid': bid_list,
+                # '微博bid': bid_list,
                 'Author': author_list,
                 'Post_time': time_list,
                 'Content': post_text_list,
@@ -121,7 +125,7 @@ def get_weibo_list(v_keyword, v_max_page):
         if os.path.exists(v_webo_file):
             header = None
         else:
-            header = ['页码', '微博id', '微博bid', 'Author', 'Post_time',
+            header = ['页码', '微博id','Author', 'Post_time',
                       'Content', 'PostNum', 'CommentNum', 'AttitudeNum']
         df.to_csv(v_webo_file, mode='a+', index=False,
                   header=header, encoding='utf-8')
@@ -171,20 +175,19 @@ if __name__ == '__main__':
     # get data
     get_weibo_list(v_keyword=search_keyword, v_max_page=max_search_page)
 
-    # data duplicates clean
-    df = pd.read_csv(v_webo_file)
-    #
-    df.drop_duplicates(subset=['微博bid'], inplace=True, keep='first')
-    df.to_csv(v_webo_file, index=False, encoding='utf_8_sig')
+    # # data duplicates clean
+    # df = pd.read_csv(v_webo_file)
+    # df.drop_duplicates(subset=['微博bid'], inplace=True, keep='first')
+    # df.to_csv(v_webo_file, index=False, encoding='utf_8_sig')
 
     # data filter
     df_filter = pd.read_csv(v_webo_file)
     # 转发数
-    df_filter = df[df['PostNum'] >= filter_posts_num]
+    df_filter = df_filter[df_filter['PostNum'] >= filter_posts_num]
     # 评论数
-    df_filter = df[df['CommentNum'] >= filter_comments_num]
+    df_filter = df_filter[df_filter['CommentNum'] >= filter_comments_num]
     # 点赞数
-    df_filter = df[df['AttitudeNum'] >= filter_attitude_num]
+    df_filter = df_filter[df_filter['AttitudeNum'] >= filter_attitude_num]
     # 微博内容
     for content in filter_content:
         df_filter = df_filter[df_filter["Content"].str.contains(content)]
