@@ -47,7 +47,6 @@ def get_weibo_list(v_keyword, v_max_page):
             "page_type": "searchall",
             "page": page
         }
-
         # 发起请求
         r = requests.get(url, headers=headers, params=params)
 
@@ -95,15 +94,15 @@ def get_weibo_list(v_keyword, v_max_page):
         # attitudes
         attitudes_count_list = jsonpath(cards, '$..mblog.attitudes_count')
 
-        logger.debug(f"pre_text_list_length:{len(pre_text_list)},\
-            post_text_list_length:{len(post_text_list)},\
-                time_list_length:{len(time_list)},\
-                    author_list_length:{len(author_list)},\
-                        id_list_length:{len(id_list)},\
-                            bid_list_length:{len(bid_list)},\
-                                reposts_count_list_length:{len(reposts_count_list)},\
-                                    comments_count_list_length:{len(comments_count_list)},\
-                                        attitudes_count_list_length:{len(attitudes_count_list)},")
+        logger.debug(f"pre_text_list_length:{len(pre_text_list)}\n"+
+            f"post_text_list_length:{len(post_text_list)}\n"+
+                f"time_list_length:{len(time_list)}\n"+
+                    f"author_list_length:{len(author_list)}\n"+
+                        f"id_list_length:{len(id_list)}\n"+
+                            f"bid_list_length:{len(bid_list)}\n"+
+                                f"reposts_count_list_length:{len(reposts_count_list)}\n"+
+                                    f"comments_count_list_length:{len(comments_count_list)}\n"+
+                                        f"attitudes_count_list_length:{len(attitudes_count_list)}")
 
         df = pd.DataFrame(
             {
