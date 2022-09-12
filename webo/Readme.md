@@ -3,6 +3,7 @@
 ## Need to Repair
 
 if query keyword like famous scene，it will reveal some thing that we wan't see in program
+when I search 雷峰塔,some thing error happened and program stop because of this error
 
 ## What I Study
 
@@ -25,3 +26,4 @@ https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.filt
 过滤掉一些数据:
 https://blog.csdn.net/weixin_45914452/article/details/120585861
 
+logging module to debug
