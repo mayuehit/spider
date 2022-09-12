@@ -119,27 +119,24 @@ if __name__ == '__main__':
     
     print('>>>> crawl total {} for keyword {}'.format(max_search_page,search_keyword))
 
-    # clean job
+    # pre clean job
     if os.path.exists(v_webo_file):
         os.remove(v_webo_file)
         print('>>>> clean job done')
+
     # get data
     get_weibo_list(v_keyword=search_keyword,v_max_page=max_search_page)
 
-    # data clean
+    # data duplicates clean 
     df = pd.read_csv(v_webo_file)
-
-    # clean duplicates
+    # 
     df.drop_duplicates(subset=['微博bid'],inplace=True,keep='first')
-
-    # save
     df.to_csv(v_webo_file,index=False,encoding='utf_8_sig')
 
     # data filter
-    df = pd.read_csv(v_webo_file)
+    df_filter = pd.read_csv(v_webo_file)
     df_filter = df[df['PostNum']>=100]
     df_filter = df_filter[df_filter["Content"].str.contains(search_keyword)]
-    # save
     df_filter.to_csv(v_webo_file,index=False,encoding='utf_8_sig')
 
     endtime = datetime.datetime.now()

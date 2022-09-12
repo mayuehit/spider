@@ -1,5 +1,9 @@
 # ReadMe
 
+## Need to Repair
+
+if query keyword like famous scene，it will reveal some thing that we wan't see in program
+
 ## What I Study
 
 pip3 install pandas -i https://pypi.tuna.tsinghua.edu.cn/simple
@@ -20,3 +24,4 @@ DataFrame:
 https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.filter.html
 过滤掉一些数据:
 https://blog.csdn.net/weixin_45914452/article/details/120585861
+
