@@ -109,10 +109,29 @@ if __name__ == '__main__':
     print('>>>> start program!')
 
     # 页数
-    max_search_page = 100
+    max_search_page = 10
     
     # 关键字
     search_keyword = '补邮'
+
+    # 文本
+    filter_content = ["",""]
+
+    # 作者
+    filter_author = ""
+
+    # 日期
+    filter_time = ""
+
+    # 转发数
+    filter_posts_num = 0
+
+    # 点赞数
+    filter_attitude_num = 0
+
+    # 评论数量
+    filter_comments_num = 0
+
 
     # csv文件
     v_webo_file = 'webo_{}_total_num_{}.csv'.format(search_keyword,max_search_page)
@@ -136,13 +155,18 @@ if __name__ == '__main__':
     # data filter
     df_filter = pd.read_csv(v_webo_file)
     # 转发数
-    df_filter = df[df['PostNum']>=100]
+    df_filter = df[df['PostNum']>=filter_posts_num]
+    # 评论数
+    df_filter = df[df['CommentNum']>=filter_comments_num]
+    # 点赞数
+    df_filter = df[df['AttitudeNum']>=filter_attitude_num]
     # 微博内容
-    df_filter = df_filter[df_filter["Content"].str.contains(search_keyword)]
+    for content in filter_content:
+        df_filter = df_filter[df_filter["Content"].str.contains(content)]
     # 微博作者
-    df_filter = df_filter[df_filter["Author"].str.contains(search_keyword)]
+    df_filter = df_filter[df_filter["Author"].str.contains(filter_author)]
     # 发表时间
-    df_filter = df_filter[df_filter["Post_time"]>="2022-09-06 23:09:00"]
+    df_filter = df_filter[df_filter["Post_time"]>=filter_time]
 
     df_filter.to_csv(v_webo_file,index=False,encoding='utf_8_sig')
     endtime = datetime.datetime.now()
