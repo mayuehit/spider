@@ -109,7 +109,7 @@ if __name__ == '__main__':
     print('>>>> start program!')
 
     # 页数
-    max_search_page = 10
+    max_search_page = 100
     
     # 关键字
     search_keyword = '补邮'
@@ -135,10 +135,16 @@ if __name__ == '__main__':
 
     # data filter
     df_filter = pd.read_csv(v_webo_file)
+    # 转发数
     df_filter = df[df['PostNum']>=100]
+    # 微博内容
     df_filter = df_filter[df_filter["Content"].str.contains(search_keyword)]
-    df_filter.to_csv(v_webo_file,index=False,encoding='utf_8_sig')
+    # 微博作者
+    df_filter = df_filter[df_filter["Author"].str.contains(search_keyword)]
+    # 发表时间
+    df_filter = df_filter[df_filter["Post_time"]>="2022-09-06 23:09:00"]
 
+    df_filter.to_csv(v_webo_file,index=False,encoding='utf_8_sig')
     endtime = datetime.datetime.now()
     print('>>>> program finish! cost {} seconds'.format((endtime - starttime).seconds))
 
