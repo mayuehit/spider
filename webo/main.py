@@ -1,3 +1,5 @@
+import keyword
+from this import d
 import requests
 import re
 import os
@@ -135,10 +137,10 @@ if __name__ == '__main__':
 
     # data filter
     df = pd.read_csv(v_webo_file)
-    df_filter = df[df['PostNum']>=100]
-    
+    df_filter_one = df[df['PostNum']>=100]
+    df_filter_two = df_filter_one[df_filter_one["Content"].str.contains(search_keyword)]
     # save
-    df_filter.to_csv(v_webo_file,index=False,encoding='utf_8_sig')
+    df_filter_two.to_csv(v_webo_file,index=False,encoding='utf_8_sig')
 
     endtime = datetime.datetime.now()
     print('>>>> program finish! cost {} seconds'.format((endtime - starttime).seconds))
